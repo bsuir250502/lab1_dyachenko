@@ -36,63 +36,81 @@ int main (int argc, char *argv[2])
 	FILE *file,*file2; 
     char *fname = "d:/githubdir/index.txt";
 	char *foutt ="d:/githubdir/out.txt";
-    char result_sting[20]; //Строка в 20 символов
+    char result_sting[20]; 
 	
 
 	
 	if (argc==1)
 	{
-		printf(" vu ne vveli parametru \n");
+		printf(" No param is find\n");
 		printf("Usage foo param \n");
 		printf("Where param mean \n");
-		printf("-e - vvod structuru \n");
-		printf("-h - vuvod structuru v file \n");
-		printf("-x - poisk max o4enki \n");
-		printf("-n - poisk min o4enki \n");
+		printf("-e - enter stucturs \n");
+		printf("-p - print structurs in file \n");
+		printf("-x - find max marke \n");
+		printf("-n - find min marke \n");
+		printf("-h - information \n");
 	}
 	else
 	{
 		for(int i=0;i<argc;i++)
 		{
-
+	if(argv[i][0]=='-' && argv[i][1]=='h')
+	{
+		printf("================================================================================\n"
+               "                                    Help:\n\n"
+               "Commands: \\e \\p \\x \\n \n\n"
+               "\\e - Structure input\n"
+               "    1) Enter the name of the student. \n"
+			   "    1) Enter the group number. \n"
+               "    3) Enter marks. Marks should be integers from 1 to 10. "
+               "\\p - Print whole structure.\n"
+               "    Print all entries in file.\n\n"
+               "\\x - Searching for the maximum average of exam\n"
+               "    Displays the maximum average of exams.\n\n"
+               "\\n - Searching for the minimum average of exam\n"
+               "    Displays the minimum average of exams.\n\n"
+               "================================================================================\n");
+        exit(0);
+	}
 	if(argv[i][0]=='-' && argv[i][1]=='e')
 	{
 		int kol;
-	printf("informaciu ob skolbkix studentav gelaite vvesti ?");
+	printf("information on how many students want to enter ?");
 	scanf_s("%d",&kol);
 	ind2+=kol;
 	
 	for(int i=0;i<kol;i++)
 	{
-		printf("vvedite im9\n");
+		printf("enter Name\n");
 	    fflush(stdin);
 		gets_s(cp_1[i+ind3].fio);
-		printf("vvedite grupu");
+		printf("enter nomber of group");
 		scanf_s("%d",& cp_1[i+ind3].gruop);
 		cp_1[i+ind3].semestr[0]=1;
-		printf("semestr 1 :angl = ");
+		printf("term 1 :english = ");
 		scanf_s("%d",& cp_2[i+ind3].angl);
-		printf("semestr 1 :fiz = ");
+		printf("term 1 :physics = ");
 		scanf_s("%d",& cp_2[i+ind3].fiz);
-		printf("semestr 1 :mat = ");
+		printf("term 1 :mathem = ");
 		scanf_s("%d",& cp_2[i+ind3].mat);
-		printf("semestr 1 :oaip = ");
+		printf("term 1 :oaip = ");
 		scanf_s("%d",& cp_2[i+ind3].oaip);
 		cp_1[i+ind3].semestr[1]=2;
-		printf("semestr 2 :chem = ");
+		printf("term 2 :chem = ");
 		scanf_s("%d",& cp_3[i+ind3].chem);
-		printf("semestr 2 :fiz2 = ");
+		printf("term 2 :physics = ");
 		scanf_s("%d",& cp_3[i+ind3].fiz2);
-		printf("semestr 2 :georgafi = ");
+		printf("term 2 :geography = ");
 		scanf_s("%d",& cp_3[i+ind3].georgafi);
-		printf("semestr 2 :mat2 = ");
+		printf("term 2 :mathem = ");
 		scanf_s("%d",& cp_3[i+ind3].mat2);
 	}
 	ind3+=kol;
 	
 		break;
 	}
-	if(argv[i][0]=='-' && argv[i][1]=='h' && zapret==0)
+	if(argv[i][0]=='-' && argv[i][1]=='p' && zapret==0)
 	{
 		file = fopen(fname,"r");
 		int i=0,x=1;
@@ -120,10 +138,10 @@ int main (int argc, char *argv[2])
 
 		file = fopen(fname,"r");
 		int i=0,x=1;
-		//printf("Fio    grupa   Sem Angl fizika matim oaip sem chem fizika geografia matim \n");
+		
 		while (fscanf (file, "%s%d%d%d%d%d%d%d%d%d%d%d", cp_1[i].fio, &(cp_1[i].gruop), &(cp_1[i].semestr[0]), &(cp_2[i].angl), &(cp_2[i].fiz),&(cp_2[i].mat),&(cp_2[i].oaip),&(cp_1[i].semestr[1]),&(cp_3[i].chem),&(cp_3[i].fiz2),&(cp_3[i].georgafi),&(cp_3[i].mat2) ) != EOF)
 		{
-		//printf("%s %7d%5d%5d%5d%5d%5d%5d%5d%5d%5d%5d \n", cp_1[i].fio, (cp_1[i].gruop), (cp_1[i].semestr[0]), (cp_2[i].angl), (cp_2[i].fiz),(cp_2[i].mat),(cp_2[i].oaip),(cp_1[i].semestr[1]),(cp_3[i].chem),(cp_3[i].fiz2),(cp_3[i].georgafi),(cp_3[i].mat2) ); 
+		 
 		i++;
 		ind2++;
 		ind3++;
@@ -152,22 +170,22 @@ int main (int argc, char *argv[2])
 				ind5[1]=i;
 			}
 		}
-		printf("po itogom kakova semestra ? 1-pervogo, 2- vtoroga");
+		printf("the results of what the term ? 1-first, 2- second");
 		scanf_s("%d",&sem);
 
 		if(sem==1)
 		{
-			printf("Fio    grupa   Sem Angl fizika matim oaip sem chem fizika geografia matim \n");
+			printf("Fio    group   term english physics mathem oaip term chem physics geography mathem \n");
 		
 			printf("%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[ind5[0]].fio, (cp_1[ind5[0]].gruop), (cp_1[ind5[0]].semestr[0]), (cp_2[ind5[0]].angl), (cp_2[ind5[0]].fiz),(cp_2[ind5[0]].mat),(cp_2[ind5[0]].oaip),(cp_1[ind5[0]].semestr[1]),(cp_3[ind5[0]].chem),(cp_3[ind5[0]].fiz2),(cp_3[ind5[0]].georgafi),(cp_3[ind5[0]].mat2) ); 
-			printf("\n sredn99 ocenka = %f", max1);
+			printf("\n averge = %f", max1);
 		}
 		else
 		{
-			printf("Fio    grupa   Sem Angl fizika matim oaip sem chem fizika geografia matim \n");
+			printf("Fio    group   term english physics mathem oaip term chem physics geography mathem \n");
 		
 			printf("%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[ind5[1]].fio, (cp_1[ind5[1]].gruop), (cp_1[ind5[1]].semestr[0]), (cp_2[ind5[1]].angl), (cp_2[ind5[1]].fiz),(cp_2[ind5[1]].mat),(cp_2[ind5[1]].oaip),(cp_1[ind5[1]].semestr[1]),(cp_3[ind5[1]].chem),(cp_3[ind5[1]].fiz2),(cp_3[ind5[1]].georgafi),(cp_3[ind5[1]].mat2) ); 
-			printf("\n sredn99 ocenka = %f", max2);
+			printf("\n averge  = %f", max2);
 		}
 
 		break;
@@ -207,32 +225,29 @@ int main (int argc, char *argv[2])
 				ind4[1]=i;
 			}
 		}
-		printf("po itogom kakova semestra ? 1-pervogo, 2- vtoroga");
+		printf("the results of what the term ? 1-first, 2- second");
 		scanf_s("%d",&sem);
 
 		if(sem==1)
 		{
-			printf("Fio    grupa   Sem Angl fizika matim oaip sem chem fizika geografia matim \n");
+			printf("Fio    group   term english physics mathem oaip term chem physics geography mathem \n");
 		
 			printf("%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[ind4[sem-1]].fio, (cp_1[ind4[sem-1]].gruop), (cp_1[ind4[sem-1]].semestr[0]), (cp_2[ind4[sem-1]].angl), (cp_2[ind4[sem-1]].fiz),(cp_2[ind4[sem-1]].mat),(cp_2[ind4[sem-1]].oaip),(cp_1[ind4[sem-1]].semestr[1]),(cp_3[ind4[sem-1]].chem),(cp_3[ind4[sem-1]].fiz2),(cp_3[ind4[sem-1]].georgafi),(cp_3[ind4[sem-1]].mat2) ); 
-			printf("\n sredn99 ocenka = %f", min1);
+			printf("\n averge = %f", min1);
 		}
 		else
 		{
-			printf("Fio    grupa   Sem Angl fizika matim oaip sem chem fizika geografia matim \n");
+			printf("Fio    group   term english physics mathem oaip term chem physics geography mathem \n");
 		
 			printf("%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[ind4[sem-1]].fio, (cp_1[ind4[sem-1]].gruop), (cp_1[ind4[sem-1]].semestr[0]), (cp_2[ind4[sem-1]].angl), (cp_2[ind4[sem-1]].fiz),(cp_2[ind4[sem-1]].mat),(cp_2[ind4[sem-1]].oaip),(cp_1[ind4[sem-1]].semestr[1]),(cp_3[ind4[sem-1]].chem),(cp_3[ind4[sem-1]].fiz2),(cp_3[ind4[sem-1]].georgafi),(cp_3[ind4[sem-1]].mat2) ); 
-			printf("\n sredn99 ocenka = %f", min2);
+			printf("\n averge  = %f", min2);
 		}
 
 
 
 		break;
 	}
-	else
-	{
-		printf("nevernui parametr");
-	}
+	
 		}
 	}
 	
