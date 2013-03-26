@@ -27,10 +27,9 @@ struct fun_3
 };
 
 
-int main (int argc, char* argv[])
+int main (int argc, char *argv[2])
 {
 	int ind1=0,ind2=0,ind3=0,zapret=0;
-	printf("new");
 	struct fun_1 cp_1[20];
 	struct fun_2 cp_2[20];
 	struct fun_3 cp_3[20];
@@ -39,16 +38,24 @@ int main (int argc, char* argv[])
 	char *foutt ="d:/githubdir/out.txt";
     char result_sting[20]; //Строка в 20 символов
 	
-	
-	
 
-
-	do
+	
+	if (argc==1)
 	{
-	printf("\n 1- vvesti structuru , 2 - otkrutb file, 3- zapisb v file ,4- poisk min sred o4enki. 5- poisk max sred o4enki \n"); 
-	scanf_s("%d",&ind1);
+		printf(" vu ne vveli parametru \n");
+		printf("Usage foo param \n");
+		printf("Where param mean \n");
+		printf("-e - vvod structuru \n");
+		printf("-h - vuvod structuru v file \n");
+		printf("-x - poisk max o4enki \n");
+		printf("-n - poisk min o4enki \n");
+	}
+	else
+	{
+		for(int i=0;i<argc;i++)
+		{
 
-	if(ind1==1) // vvod structuru
+	if(argv[i][0]=='-' && argv[i][1]=='e')
 	{
 		int kol;
 	printf("informaciu ob skolbkix studentav gelaite vvesti ?");
@@ -59,7 +66,7 @@ int main (int argc, char* argv[])
 	{
 		printf("vvedite im9\n");
 	    fflush(stdin);
-		gets(cp_1[i+ind3].fio);
+		gets_s(cp_1[i+ind3].fio);
 		printf("vvedite grupu");
 		scanf_s("%d",& cp_1[i+ind3].gruop);
 		cp_1[i+ind3].semestr[0]=1;
@@ -83,51 +90,46 @@ int main (int argc, char* argv[])
 	}
 	ind3+=kol;
 	
+		break;
 	}
-	
-	if(ind1==4)// poisk sred min
+	if(argv[i][0]=='-' && argv[i][1]=='h' && zapret==0)
 	{
-		float min1,middle_markes[2][20],min2;
-		int sem,ind4[2];
-		for(int i=0;i<ind2;i++)
-		{
-			middle_markes[0][i]=(cp_2[i].angl + cp_2[i].fiz + cp_2[i].mat + cp_2[i].oaip)/4.;
-			middle_markes[1][i]=(cp_3[i].chem + cp_3[i].fiz2 + cp_3[i].georgafi + cp_3[i].mat2)/4.;
+		file = fopen(fname,"r");
+		int i=0,x=1;
+		
+		while (fscanf (file, "%s%d%d%d%d%d%d%d%d%d%d%d", cp_1[i].fio, &(cp_1[i].gruop), &(cp_1[i].semestr[0]), &(cp_2[i].angl), &(cp_2[i].fiz),&(cp_2[i].mat),&(cp_2[i].oaip),&(cp_1[i].semestr[1]),&(cp_3[i].chem),&(cp_3[i].fiz2),&(cp_3[i].georgafi),&(cp_3[i].mat2) ) != EOF)
+		{ 
+		i++;
+		ind2++;
+		ind3++;
 		}
-		min1=middle_markes[0][0];
-		min2=middle_markes[1][0];
-		for(int i=0;i<ind2;i++)
-		{
-			if(middle_markes[0][i]<min1)
-			{
-				min1=middle_markes[0][i];
-				ind4[0]=i;
-			}
-			if(middle_markes[1][i]<min2)
-			{
-				min2=middle_markes[1][i];
-				ind4[1]=i;
-			}
-		}
-		printf("po itogom kakova semestra ? 1-pervogo, 2- vtoroga");
-		scanf_s("%d",&sem);
+        fclose(file);
+		zapret=1;
 
-		if(sem==1)
-		{
-			printf("%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[ind4[sem-1]].fio, (cp_1[ind4[sem-1]].gruop), (cp_1[ind4[sem-1]].semestr[0]), (cp_2[ind4[sem-1]].angl), (cp_2[ind4[sem-1]].fiz),(cp_2[ind4[sem-1]].mat),(cp_2[ind4[sem-1]].oaip),(cp_1[ind4[sem-1]].semestr[1]),(cp_3[ind4[sem-1]].chem),(cp_3[ind4[sem-1]].fiz2),(cp_3[ind4[sem-1]].georgafi),(cp_3[ind4[sem-1]].mat2) ); 
-			printf("\n sredn99 ocenka = %f", min1);
-		}
-		else
-		{
-			printf("%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[ind4[sem-1]].fio, (cp_1[ind4[sem-1]].gruop), (cp_1[ind4[sem-1]].semestr[0]), (cp_2[ind4[sem-1]].angl), (cp_2[ind4[sem-1]].fiz),(cp_2[ind4[sem-1]].mat),(cp_2[ind4[sem-1]].oaip),(cp_1[ind4[sem-1]].semestr[1]),(cp_3[ind4[sem-1]].chem),(cp_3[ind4[sem-1]].fiz2),(cp_3[ind4[sem-1]].georgafi),(cp_3[ind4[sem-1]].mat2) ); 
-			printf("\n sredn99 ocenka = %f", min2);
-		}
+		file2 = fopen(foutt,"w");
+	for(i=0;i<ind2;i++)
+    fprintf(file2,"%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[i].fio, (cp_1[i].gruop), (cp_1[i].semestr[0]), (cp_2[i].angl), (cp_2[i].fiz),(cp_2[i].mat),(cp_2[i].oaip),(cp_1[i].semestr[1]),(cp_3[i].chem),(cp_3[i].fiz2),(cp_3[i].georgafi),(cp_3[i].mat2) ); 
 
+    fclose(file2);
+
+
+		break;
 	}
-
-	if(ind1==5)  // poisk sred max
+	if(argv[i][0]=='-' && argv[i][1]=='x')
 	{
 
+		file = fopen(fname,"r");
+		int i=0,x=1;
+		//printf("Fio    grupa   Sem Angl fizika matim oaip sem chem fizika geografia matim \n");
+		while (fscanf (file, "%s%d%d%d%d%d%d%d%d%d%d%d", cp_1[i].fio, &(cp_1[i].gruop), &(cp_1[i].semestr[0]), &(cp_2[i].angl), &(cp_2[i].fiz),&(cp_2[i].mat),&(cp_2[i].oaip),&(cp_1[i].semestr[1]),&(cp_3[i].chem),&(cp_3[i].fiz2),&(cp_3[i].georgafi),&(cp_3[i].mat2) ) != EOF)
+		{
+		//printf("%s %7d%5d%5d%5d%5d%5d%5d%5d%5d%5d%5d \n", cp_1[i].fio, (cp_1[i].gruop), (cp_1[i].semestr[0]), (cp_2[i].angl), (cp_2[i].fiz),(cp_2[i].mat),(cp_2[i].oaip),(cp_1[i].semestr[1]),(cp_3[i].chem),(cp_3[i].fiz2),(cp_3[i].georgafi),(cp_3[i].mat2) ); 
+		i++;
+		ind2++;
+		ind3++;
+		}
+
+        fclose(file);
 		float max1,middle_markes2[2][20],max2;
 		int sem,ind5[2]={0,0};
 		for(int i=0;i<ind2;i++)
@@ -155,76 +157,85 @@ int main (int argc, char* argv[])
 
 		if(sem==1)
 		{
+			printf("Fio    grupa   Sem Angl fizika matim oaip sem chem fizika geografia matim \n");
+		
 			printf("%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[ind5[0]].fio, (cp_1[ind5[0]].gruop), (cp_1[ind5[0]].semestr[0]), (cp_2[ind5[0]].angl), (cp_2[ind5[0]].fiz),(cp_2[ind5[0]].mat),(cp_2[ind5[0]].oaip),(cp_1[ind5[0]].semestr[1]),(cp_3[ind5[0]].chem),(cp_3[ind5[0]].fiz2),(cp_3[ind5[0]].georgafi),(cp_3[ind5[0]].mat2) ); 
 			printf("\n sredn99 ocenka = %f", max1);
 		}
 		else
 		{
+			printf("Fio    grupa   Sem Angl fizika matim oaip sem chem fizika geografia matim \n");
+		
 			printf("%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[ind5[1]].fio, (cp_1[ind5[1]].gruop), (cp_1[ind5[1]].semestr[0]), (cp_2[ind5[1]].angl), (cp_2[ind5[1]].fiz),(cp_2[ind5[1]].mat),(cp_2[ind5[1]].oaip),(cp_1[ind5[1]].semestr[1]),(cp_3[ind5[1]].chem),(cp_3[ind5[1]].fiz2),(cp_3[ind5[1]].georgafi),(cp_3[ind5[1]].mat2) ); 
 			printf("\n sredn99 ocenka = %f", max2);
 		}
 
-
-
-
+		break;
 	}
-
-	if(ind1==2 && zapret==0) //otkrut file
+	if(argv[i][0]=='-' && argv[i][1]=='n')
 	{
-		 
- 
-        file = fopen(fname,"r");
- 
-        if(file == 0)
-        {
-                printf("\n ne mogu otkrutb file '%s' \n ",fname);
-        }
-		else
-		{   
-			printf("\n file otkrut \n ");
-		}
-		int i=0;
+		file = fopen(fname,"r");
+		int i=0,x=1;
+		//printf("Fio    grupa   Sem Angl fizika matim oaip sem chem fizika geografia matim \n");
 		while (fscanf (file, "%s%d%d%d%d%d%d%d%d%d%d%d", cp_1[i].fio, &(cp_1[i].gruop), &(cp_1[i].semestr[0]), &(cp_2[i].angl), &(cp_2[i].fiz),&(cp_2[i].mat),&(cp_2[i].oaip),&(cp_1[i].semestr[1]),&(cp_3[i].chem),&(cp_3[i].fiz2),&(cp_3[i].georgafi),&(cp_3[i].mat2) ) != EOF)
 		{
-		printf("%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[i].fio, (cp_1[i].gruop), (cp_1[i].semestr[0]), (cp_2[i].angl), (cp_2[i].fiz),(cp_2[i].mat),(cp_2[i].oaip),(cp_1[i].semestr[1]),(cp_3[i].chem),(cp_3[i].fiz2),(cp_3[i].georgafi),(cp_3[i].mat2) ); 
+		//printf("%s %7d%5d%5d%5d%5d%5d%5d%5d%5d%5d%5d \n", cp_1[i].fio, (cp_1[i].gruop), (cp_1[i].semestr[0]), (cp_2[i].angl), (cp_2[i].fiz),(cp_2[i].mat),(cp_2[i].oaip),(cp_1[i].semestr[1]),(cp_3[i].chem),(cp_3[i].fiz2),(cp_3[i].georgafi),(cp_3[i].mat2) ); 
 		i++;
 		ind2++;
 		ind3++;
 		}
-		
-
-
         fclose(file);
-		zapret=1;
-	}
+		float min1,middle_markes[2][20],min2;
+		int sem,ind4[2];
+		for(int i=0;i<ind2;i++)
+		{
+			middle_markes[0][i]=(cp_2[i].angl + cp_2[i].fiz + cp_2[i].mat + cp_2[i].oaip)/4.;
+			middle_markes[1][i]=(cp_3[i].chem + cp_3[i].fiz2 + cp_3[i].georgafi + cp_3[i].mat2)/4.;
+		}
+		min1=middle_markes[0][0];
+		min2=middle_markes[1][0];
+		for(int i=0;i<ind2;i++)
+		{
+			if(middle_markes[0][i]<min1)
+			{
+				min1=middle_markes[0][i];
+				ind4[0]=i;
+			}
+			if(middle_markes[1][i]<min2)
+			{
+				min2=middle_markes[1][i];
+				ind4[1]=i;
+			}
+		}
+		printf("po itogom kakova semestra ? 1-pervogo, 2- vtoroga");
+		scanf_s("%d",&sem);
 
-	}
-	while(ind1!=3);
-	
-
-
-	file2 = fopen(foutt,"w");
-	if(file2 == 0)
-        {
-                printf("\n ne mogu otkrutb file '%s' \n ",foutt);
-        }
+		if(sem==1)
+		{
+			printf("Fio    grupa   Sem Angl fizika matim oaip sem chem fizika geografia matim \n");
+		
+			printf("%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[ind4[sem-1]].fio, (cp_1[ind4[sem-1]].gruop), (cp_1[ind4[sem-1]].semestr[0]), (cp_2[ind4[sem-1]].angl), (cp_2[ind4[sem-1]].fiz),(cp_2[ind4[sem-1]].mat),(cp_2[ind4[sem-1]].oaip),(cp_1[ind4[sem-1]].semestr[1]),(cp_3[ind4[sem-1]].chem),(cp_3[ind4[sem-1]].fiz2),(cp_3[ind4[sem-1]].georgafi),(cp_3[ind4[sem-1]].mat2) ); 
+			printf("\n sredn99 ocenka = %f", min1);
+		}
 		else
-		{   
-			printf("\n file otkrut \n ");
+		{
+			printf("Fio    grupa   Sem Angl fizika matim oaip sem chem fizika geografia matim \n");
+		
+			printf("%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[ind4[sem-1]].fio, (cp_1[ind4[sem-1]].gruop), (cp_1[ind4[sem-1]].semestr[0]), (cp_2[ind4[sem-1]].angl), (cp_2[ind4[sem-1]].fiz),(cp_2[ind4[sem-1]].mat),(cp_2[ind4[sem-1]].oaip),(cp_1[ind4[sem-1]].semestr[1]),(cp_3[ind4[sem-1]].chem),(cp_3[ind4[sem-1]].fiz2),(cp_3[ind4[sem-1]].georgafi),(cp_3[ind4[sem-1]].mat2) ); 
+			printf("\n sredn99 ocenka = %f", min2);
 		}
-	 
-	int i=0;
-	for(i=0;i<ind2;i++)
-    fprintf(file2,"%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[i].fio, (cp_1[i].gruop), (cp_1[i].semestr[0]), (cp_2[i].angl), (cp_2[i].fiz),(cp_2[i].mat),(cp_2[i].oaip),(cp_1[i].semestr[1]),(cp_3[i].chem),(cp_3[i].fiz2),(cp_3[i].georgafi),(cp_3[i].mat2) ); 
 
-	printf("vremenna9 proverka\n");
-	for(int i=0;i<ind2;i++)
+
+
+		break;
+	}
+	else
 	{
-	printf_s("\n");
-	
-	printf("%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[i].fio, (cp_1[i].gruop), (cp_1[i].semestr[0]), (cp_2[i].angl), (cp_2[i].fiz),(cp_2[i].mat),(cp_2[i].oaip),(cp_1[i].semestr[1]),(cp_3[i].chem),(cp_3[i].fiz2),(cp_3[i].georgafi),(cp_3[i].mat2) ); 
+		printf("nevernui parametr");
+	}
 		}
-    fclose(file2);
+	}
+	
 	getch();
 	
 	return 0;
