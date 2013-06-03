@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <string.h>
-
+#define N 128
 struct fun_1
 {
-	char fio[20];
+	char fio[N];
 	int gruop;
 	int semestr[2];
 
@@ -30,15 +30,29 @@ struct fun_3
 int main (int argc, char *argv[2])
 {
 	int ind1=0,ind2=0,ind3=0,zapret=0;
-	struct fun_1 cp_1[20];
-	struct fun_2 cp_2[20];
-	struct fun_3 cp_3[20];
+	struct fun_1 cp_1[N];
+	struct fun_2 cp_2[N];
+	struct fun_3 cp_3[N];
 	FILE *file,*file2; 
     char *fname = "d:/githubdir/index.txt";
 	char *foutt ="d:/githubdir/out.txt";
-    char result_sting[20]; 
+    char result_sting[N]; 
+	char buffer[N][N];
+	char fake[N]={};
 	
-
+	file = fopen(fname,"r");
+		int i=0,x=1;
+		
+		while (fscanf (file, "%s%d%d%d%d%d%d%d%d%d%d%d", cp_1[i].fio, &(cp_1[i].gruop), &(cp_1[i].semestr[0]), &(cp_2[i].angl), &(cp_2[i].fiz),&(cp_2[i].mat),&(cp_2[i].oaip),&(cp_1[i].semestr[1]),&(cp_3[i].chem),&(cp_3[i].fiz2),&(cp_3[i].georgafi),&(cp_3[i].mat2) ) != EOF)
+		
+		
+		{ 
+		i++;
+		ind2++;
+		ind3++;
+		}
+        fclose(file);
+		
 	
 	if (argc==1)
 	{
@@ -63,7 +77,7 @@ int main (int argc, char *argv[2])
                "\\e - Structure input\n"
                "    1) Enter the name of the student. \n"
 			   "    1) Enter the group number. \n"
-               "    3) Enter marks. Marks should be integers from 1 to 10. "
+               "    3) Enter marks. Marks should be integers from 1 to 10.\n"
                "\\p - Print whole structure.\n"
                "    Print all entries in file.\n\n"
                "\\x - Searching for the maximum average of exam\n"
@@ -83,8 +97,12 @@ int main (int argc, char *argv[2])
 	for(int i=0;i<kol;i++)
 	{
 		printf("enter Name\n");
-	    fflush(stdin);
-		gets_s(cp_1[i+ind3].fio);
+		fflush(stdin);
+		for(int j=0;j<1;){
+		if( strcmp(gets_s(cp_1[i+ind3].fio),fake) == 0 )
+		{printf("Enter name agein");}
+		else j++;
+		}
 		printf("enter nomber of group");
 		scanf_s("%d",& cp_1[i+ind3].gruop);
 		cp_1[i+ind3].semestr[0]=1;
@@ -107,47 +125,25 @@ int main (int argc, char *argv[2])
 		scanf_s("%d",& cp_3[i+ind3].mat2);
 	}
 	ind3+=kol;
-	
+		zapret=1;
 		break;
 	}
-	if(argv[i][0]=='-' && argv[i][1]=='p' && zapret==0)
+	if(argv[i][0]=='-' && argv[i][1]=='p' )
 	{
-		file = fopen(fname,"r");
-		int i=0,x=1;
 		
-		while (fscanf (file, "%s%d%d%d%d%d%d%d%d%d%d%d", cp_1[i].fio, &(cp_1[i].gruop), &(cp_1[i].semestr[0]), &(cp_2[i].angl), &(cp_2[i].fiz),&(cp_2[i].mat),&(cp_2[i].oaip),&(cp_1[i].semestr[1]),&(cp_3[i].chem),&(cp_3[i].fiz2),&(cp_3[i].georgafi),&(cp_3[i].mat2) ) != EOF)
-		{ 
-		i++;
-		ind2++;
-		ind3++;
-		}
-        fclose(file);
-		zapret=1;
 
-		file2 = fopen(foutt,"w");
+	file2 = fopen(foutt,"w");
 	for(i=0;i<ind2;i++)
     fprintf(file2,"%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[i].fio, (cp_1[i].gruop), (cp_1[i].semestr[0]), (cp_2[i].angl), (cp_2[i].fiz),(cp_2[i].mat),(cp_2[i].oaip),(cp_1[i].semestr[1]),(cp_3[i].chem),(cp_3[i].fiz2),(cp_3[i].georgafi),(cp_3[i].mat2) ); 
 
     fclose(file2);
-
+	printf("Information print in file ' out.txt ' \n");
 
 		break;
 	}
 	if(argv[i][0]=='-' && argv[i][1]=='x')
 	{
 
-		file = fopen(fname,"r");
-		int i=0,x=1;
-		
-		while (fscanf (file, "%s%d%d%d%d%d%d%d%d%d%d%d", cp_1[i].fio, &(cp_1[i].gruop), &(cp_1[i].semestr[0]), &(cp_2[i].angl), &(cp_2[i].fiz),&(cp_2[i].mat),&(cp_2[i].oaip),&(cp_1[i].semestr[1]),&(cp_3[i].chem),&(cp_3[i].fiz2),&(cp_3[i].georgafi),&(cp_3[i].mat2) ) != EOF)
-		{
-		 
-		i++;
-		ind2++;
-		ind3++;
-		}
-
-        fclose(file);
 		float max1,middle_markes2[2][20],max2;
 		int sem,ind5[2]={0,0};
 		for(int i=0;i<ind2;i++)
@@ -192,17 +188,7 @@ int main (int argc, char *argv[2])
 	}
 	if(argv[i][0]=='-' && argv[i][1]=='n')
 	{
-		file = fopen(fname,"r");
-		int i=0,x=1;
-		//printf("Fio    grupa   Sem Angl fizika matim oaip sem chem fizika geografia matim \n");
-		while (fscanf (file, "%s%d%d%d%d%d%d%d%d%d%d%d", cp_1[i].fio, &(cp_1[i].gruop), &(cp_1[i].semestr[0]), &(cp_2[i].angl), &(cp_2[i].fiz),&(cp_2[i].mat),&(cp_2[i].oaip),&(cp_1[i].semestr[1]),&(cp_3[i].chem),&(cp_3[i].fiz2),&(cp_3[i].georgafi),&(cp_3[i].mat2) ) != EOF)
-		{
-		//printf("%s %7d%5d%5d%5d%5d%5d%5d%5d%5d%5d%5d \n", cp_1[i].fio, (cp_1[i].gruop), (cp_1[i].semestr[0]), (cp_2[i].angl), (cp_2[i].fiz),(cp_2[i].mat),(cp_2[i].oaip),(cp_1[i].semestr[1]),(cp_3[i].chem),(cp_3[i].fiz2),(cp_3[i].georgafi),(cp_3[i].mat2) ); 
-		i++;
-		ind2++;
-		ind3++;
-		}
-        fclose(file);
+		
 		float min1,middle_markes[2][20],min2;
 		int sem,ind4[2];
 		for(int i=0;i<ind2;i++)
@@ -250,7 +236,14 @@ int main (int argc, char *argv[2])
 	
 		}
 	}
+	if(zapret==1)
+	{
+	file = fopen(fname,"w");
+	for(i=0;i<ind2;i++)
+    fprintf(file,"%s %3d%3d%3d%3d%3d%3d%3d%3d%3d%3d%3d \n", cp_1[i].fio, (cp_1[i].gruop), (cp_1[i].semestr[0]), (cp_2[i].angl), (cp_2[i].fiz),(cp_2[i].mat),(cp_2[i].oaip),(cp_1[i].semestr[1]),(cp_3[i].chem),(cp_3[i].fiz2),(cp_3[i].georgafi),(cp_3[i].mat2) ); 
 	
+    fclose(file);
+	}
 	getch();
 	
 	return 0;
